@@ -23,6 +23,7 @@ import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.ApplicationArchivesBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.smallrye.health.deployment.spi.HealthBuildItem;
+import io.quarkus.vertx.core.deployment.CoreVertxBuildItem;
 
 class DockerClientProcessor {
 
@@ -84,6 +85,7 @@ class DockerClientProcessor {
     @BuildStep
     public void setup(
             DockerClientRecorder recorder,
+            CoreVertxBuildItem vertxBuildItem,
             DockerClientNamesBuildItem clientNames,
             BuildProducer<SyntheticBeanBuildItem> syntheticBean) {
 

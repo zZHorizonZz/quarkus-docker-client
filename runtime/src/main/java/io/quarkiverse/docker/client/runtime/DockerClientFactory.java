@@ -1,5 +1,7 @@
 package io.quarkiverse.docker.client.runtime;
 
+import java.time.Duration;
+
 import org.apache.commons.lang3.SystemUtils;
 
 import com.github.dockerjava.api.DockerClient;
@@ -7,9 +9,10 @@ import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientConfig;
 import com.github.dockerjava.core.DockerClientImpl;
 import com.github.dockerjava.transport.DockerHttpClient;
-import com.github.dockerjava.zerodep.ZerodepDockerHttpClient;
 
 import io.quarkiverse.docker.client.runtime.config.DockerClientRuntimeConfig;
+import io.quarkiverse.docker.client.runtime.http.QuarkusDockerHttpClient;
+import io.vertx.core.Vertx;
 
 /**
  * Factory for creating Docker client instances with configured settings. This factory handles the creation and configuration of
@@ -49,18 +52,11 @@ public class DockerClientFactory {
     private static final String WINDOWS_DOCKER_HOST = "npipe:////./pipe/docker_engine";
     private static final String UNIX_DOCKER_HOST = "unix:///var/run/docker.sock";
 
+    private final Vertx vertx;
     private final DockerClientRuntimeConfig config;
 
-    /**
-     * Creates a new DockerClientFactory with the specified configuration.
-     *
-     * @param config The Docker client runtime configuration
-     * @throws IllegalArgumentException if config is null
-     */
-    public DockerClientFactory(DockerClientRuntimeConfig config) {
-        if (config == null) {
-            throw new IllegalArgumentException("DockerClientRuntimeConfig cannot be null");
-        }
+    public DockerClientFactory(Vertx vertx, DockerClientRuntimeConfig config) {
+        this.vertx = vertx;
         this.config = config;
     }
 
@@ -81,7 +77,7 @@ public class DockerClientFactory {
      */
     public DockerClient createClient() {
         DockerClientConfig clientConfig = buildDockerClientConfig();
-        DockerHttpClient httpClient = buildDockerHttpClient(clientConfig);
+        DockerHttpClient httpClient = buildQuarkusDockerHttpClient(clientConfig);
         return DockerClientImpl.getInstance(clientConfig, httpClient);
     }
 
@@ -159,11 +155,23 @@ public class DockerClientFactory {
      * @return Configured DockerHttpClient instance
      */
     private DockerHttpClient buildDockerHttpClient(DockerClientConfig dockerConfig) {
-        return new ZerodepDockerHttpClient.Builder()
-                .dockerHost(dockerConfig.getDockerHost())
-                .sslConfig(dockerConfig.getSSLConfig())
-                .connectionTimeout(config.connectTimeout())
-                .responseTimeout(config.readTimeout())
+        return null;/*
+                     * new ApacheDockerHttpClient.Builder()
+                     * .dockerHost(dockerConfig.getDockerHost())
+                     * .sslConfig(dockerConfig.getSSLConfig())
+                     * .connectionTimeout(config.connectTimeout())
+                     * .responseTimeout(config.readTimeout())
+                     * .build();
+                     */
+    }
+
+    private DockerHttpClient buildQuarkusDockerHttpClient(DockerClientConfig dockerConfig) {
+        io.quarkiverse.docker.client.runtime.http.DockerClientConfig quarkusConfig = new io.quarkiverse.docker.client.runtime.http.DockerClientConfig.Builder()
+                .dockerHost(dockerConfig.getDockerHost().toString())
+                .connectTimeout(Duration.ofMillis(config.connectTimeout().toMillis()))
+                .readTimeout(Duration.ofMillis(config.readTimeout().toMillis()))
                 .build();
+
+        return new QuarkusDockerHttpClient(quarkusConfig, vertx);
     }
 }

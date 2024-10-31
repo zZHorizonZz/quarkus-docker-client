@@ -12,11 +12,12 @@ import com.github.dockerjava.api.DockerClient;
 import io.quarkiverse.docker.client.runtime.config.DockerClientRuntimeConfig;
 import io.quarkiverse.docker.client.runtime.config.DockerRuntimeConfig;
 import io.quarkus.runtime.annotations.Recorder;
+import io.vertx.core.Vertx;
 
 /**
- * Runtime recorder for Docker client initialization and management.
- * This recorder is responsible for creating and managing Docker client instances
- * during the Quarkus application startup phase.
+ * Runtime recorder for Docker client initialization and management. This recorder is responsible for creating and managing
+ * Docker client instances during the Quarkus application
+ * startup phase.
  *
  * <p>
  * The recorder handles:
@@ -44,34 +45,28 @@ import io.quarkus.runtime.annotations.Recorder;
  * @see DockerClient
  * @see DockerClientFactory
  * @see DockerRuntimeConfig
- *
  * @since 1.0
  */
 @Recorder
 public class DockerClientRecorder {
 
     private final DockerRuntimeConfig config;
+    private final Vertx vertx;
 
     /**
-     * Thread-safe cache of Docker client instances.
-     * Keys are client names, values are the corresponding Docker client instances.
+     * Thread-safe cache of Docker client instances. Keys are client names, values are the corresponding Docker client
+     * instances.
      */
     private static final Map<String, DockerClient> clients = Collections.synchronizedMap(new HashMap<>());
 
-    /**
-     * Creates a new DockerClientRecorder instance.
-     *
-     * @param config The Docker runtime configuration
-     * @throws IllegalArgumentException if config is null
-     */
     public DockerClientRecorder(DockerRuntimeConfig config) {
         this.config = config;
+        this.vertx = Vertx.vertx();
     }
 
     /**
-     * Initializes Docker clients for the given set of names.
-     * This method is called during application startup to create and cache
-     * Docker client instances.
+     * Initializes Docker clients for the given set of names. This method is called during application startup to create and
+     * cache Docker client instances.
      *
      * @param names Set of client names to initialize
      * @throws IllegalStateException if configuration is missing for any client
@@ -112,12 +107,11 @@ public class DockerClientRecorder {
      * @return A new DockerClient instance
      */
     private DockerClient createDockerClient(DockerClientRuntimeConfig clientConfig) {
-        return new DockerClientFactory(clientConfig).createClient();
+        return new DockerClientFactory(vertx, clientConfig).createClient();
     }
 
     /**
-     * Retrieves the configuration for a given client name.
-     * Handles both default and named client configurations.
+     * Retrieves the configuration for a given client name. Handles both default and named client configurations.
      *
      * @param cfg The Docker runtime configuration
      * @param name The client name
@@ -135,8 +129,8 @@ public class DockerClientRecorder {
     }
 
     /**
-     * Creates a supplier for the default Docker client bean.
-     * This supplier is used by the CDI container for dependency injection.
+     * Creates a supplier for the default Docker client bean. This supplier is used by the CDI container for dependency
+     * injection.
      *
      * @return Supplier that provides the default Docker client instance
      */
@@ -151,9 +145,8 @@ public class DockerClientRecorder {
     }
 
     /**
-     * Creates a supplier for a named Docker client bean.
-     * This supplier is used by the CDI container for dependency injection
-     * of named clients.
+     * Creates a supplier for a named Docker client bean. This supplier is used by the CDI container for dependency injection of
+     * named clients.
      *
      * @param clientName The name of the client to create a supplier for
      * @return Supplier that provides the named Docker client instance
