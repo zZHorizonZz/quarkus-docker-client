@@ -4,6 +4,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.GenericContainer;
@@ -25,6 +26,7 @@ public class DockerClientResourceTest {
 
     @Test
     @Order(1)
+    @DisplayName("Test get Docker info")
     public void testGetDockerInfo() {
         given()
                 .when()
@@ -38,6 +40,7 @@ public class DockerClientResourceTest {
 
     @Test
     @Order(2)
+    @DisplayName("Test list containers")
     public void testListContainers() {
         given()
                 .when()
@@ -50,6 +53,7 @@ public class DockerClientResourceTest {
 
     @Test
     @Order(3)
+    @DisplayName("Test create container")
     public void testCreateContainer() {
         containerId = given()
                 .when()
@@ -70,6 +74,7 @@ public class DockerClientResourceTest {
 
     @Test
     @Order(4)
+    @DisplayName("Test remove container")
     public void testRemoveContainer() {
         given()
                 .when()
