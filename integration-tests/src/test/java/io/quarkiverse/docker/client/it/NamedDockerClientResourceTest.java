@@ -27,6 +27,7 @@ class NamedDockerClientResourceTest {
 
     @Test
     @Order(1)
+    @DisplayName("Test get Docker info for all clients")
     void testListContainersAllClients() {
         for (String clientName : CLIENT_NAMES) {
             given()
@@ -40,6 +41,7 @@ class NamedDockerClientResourceTest {
 
     @Test
     @Order(2)
+    @DisplayName("Test create container for all clients")
     void testCreateContainerAllClients() {
         for (String clientName : CLIENT_NAMES) {
             String containerId = given()
@@ -64,6 +66,7 @@ class NamedDockerClientResourceTest {
 
     @Test
     @Order(3)
+    @DisplayName("Test stop container for all clients")
     void testStopContainerAllClients() {
         for (String clientName : CLIENT_NAMES) {
             String containerId = containerIds.get(clientName);
@@ -86,6 +89,7 @@ class NamedDockerClientResourceTest {
 
     @Test
     @Order(4)
+    @DisplayName("Test remove container for all clients")
     void testRemoveContainerAllClients() {
         for (String clientName : CLIENT_NAMES) {
             String containerId = containerIds.get(clientName);
