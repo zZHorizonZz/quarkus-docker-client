@@ -2,7 +2,16 @@
 
 include::./includes/attributes.adoc[]
 
-TIP: Describe what the extension does here.
+The Quarkus Docker Client extension provides seamless integration with Docker through a native Java API.
+It supports multiple named clients, automatic platform-specific socket detection, and built-in health checks.
+
+Key features:
+
+* Multiple named Docker client instances for different environments
+* Automatic platform-specific Docker daemon socket detection
+* Health check integration for Docker daemon connectivity
+* Registry authentication support
+* TLS/SSL configuration for secure daemon communication
 
 == Installation
 
@@ -19,9 +28,52 @@ For instance, with Maven, add the following dependency to your POM file:
 </dependency>
 ----
 
+== Usage
+
+=== Default Client
+
+Inject the default Docker client:
+
+[source,java]
+----
+@Inject
+DockerClient dockerClient;
+
+// Use the client
+dockerClient.pingCmd().exec();
+----
+
+=== Named Clients
+
+Configure and use multiple Docker clients:
+
+[source,properties]
+----
+# Default client configuration
+quarkus.docker.docker-host=tcp://localhost:2375
+
+# Production client configuration
+quarkus.docker."production".docker-host=tcp://prod-host:2375
+quarkus.docker."production".enabled=true
+----
+
+[source,java]
+----
+@Inject
+@NamedDockerClient("production")
+DockerClient productionClient;
+----
+
+=== Health Checks
+
+Enable health checks to monitor Docker daemon connectivity:
+
+[source,properties]
+----
+quarkus.docker.health-check=true
+----
+
 [[extension-configuration-reference]]
 == Extension Configuration Reference
 
-TIP: Remove this section if you don't have Quarkus configuration properties in your extension.
-
-include::includes/quarkus-docker-client.adoc[leveloffset=+1, opts=optional]
+include::includes/quarkus-docker-client.adoc[leveloffset=+1,opts=optional]
