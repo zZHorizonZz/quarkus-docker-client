@@ -7,28 +7,36 @@
     <artifactId>quarkiverse-parent</artifactId>
     <version>15</version>
   </parent>
+  
   <groupId>io.quarkiverse.docker-client</groupId>
   <artifactId>quarkus-docker-client-parent</artifactId>
   <version>999-SNAPSHOT</version>
+  
   <packaging>pom</packaging>
+  
   <name>Quarkus Docker Client - Parent</name>
+  
   <modules>
     <module>deployment</module>
     <module>runtime</module>
     <module>docs</module>
   </modules>
+  
   <scm>
     <connection>scm:git:git@github.com:quarkiverse/quarkus-docker-client.git</connection>
     <developerConnection>scm:git:git@github.com:quarkiverse/quarkus-docker-client.git</developerConnection>
     <url>https://github.com/quarkiverse/quarkus-docker-client</url>
   </scm>
+  
   <properties>
     <compiler-plugin.version>3.12.1</compiler-plugin.version>
     <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <quarkus.version>3.16.1</quarkus.version>
+    <quarkus.version>3.15.1</quarkus.version>
+    <docker.version>3.3.5</docker.version>
   </properties>
+  
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -40,6 +48,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+  
   <build>
     <pluginManagement>
       <plugins>
@@ -60,6 +69,7 @@
       </plugins>
     </pluginManagement>
   </build>
+  
   <profiles>
     <profile>
       <id>it</id>

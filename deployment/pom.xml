@@ -7,13 +7,21 @@
     <artifactId>quarkus-docker-client-parent</artifactId>
     <version>999-SNAPSHOT</version>
   </parent>
+  
   <artifactId>quarkus-docker-client-deployment</artifactId>
   <name>Quarkus Docker Client - Deployment</name>
+  
   <dependencies>
+    <!-- Quarkus -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-arc-deployment</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-health-spi</artifactId>
+    </dependency>
+    
     <dependency>
       <groupId>io.quarkiverse.docker-client</groupId>
       <artifactId>quarkus-docker-client</artifactId>
@@ -25,6 +33,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
   <build>
     <plugins>
       <plugin>

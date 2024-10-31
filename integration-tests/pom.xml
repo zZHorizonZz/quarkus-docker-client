@@ -7,24 +7,44 @@
     <artifactId>quarkus-docker-client-parent</artifactId>
     <version>999-SNAPSHOT</version>
   </parent>
+  
   <artifactId>quarkus-docker-client-integration-tests</artifactId>
   <name>Quarkus Docker Client - Integration Tests</name>
+  
   <properties>
     <skipITs>true</skipITs>
   </properties>
+  
   <dependencies>
+    <!-- Quarkus -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy-reactive</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-health</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-rest-jackson</artifactId>
+    </dependency>
+    
+    <dependency>
       <groupId>io.quarkiverse.docker-client</groupId>
       <artifactId>quarkus-docker-client</artifactId>
       <version>${project.version}</version>
     </dependency>
+    
+    <!-- Test -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -32,7 +52,14 @@
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <version>1.20.3</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
+  
   <build>
     <plugins>
       <plugin>
@@ -66,6 +93,7 @@
       </plugin>
     </plugins>
   </build>
+  
   <profiles>
     <profile>
       <id>native-image</id>
