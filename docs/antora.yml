@@ -1,0 +1,5 @@
+name: quarkus-docker-client
+title: Docker Client
+version: dev
+nav:
+  - modules/ROOT/nav.adoc
