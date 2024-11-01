@@ -74,6 +74,13 @@ class NamedDockerClientResourceTest {
                     .then()
                     .statusCode(200);
 
+            // Wait for container to stop
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                // Ignore
+            }
+
             // Verify container is stopped
             given()
                     .when()

@@ -6,8 +6,8 @@ import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientConfig;
 import com.github.dockerjava.core.DockerClientImpl;
+import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
 import com.github.dockerjava.transport.DockerHttpClient;
-import com.github.dockerjava.zerodep.ZerodepDockerHttpClient;
 
 import io.quarkiverse.docker.client.runtime.config.DockerClientRuntimeConfig;
 
@@ -51,12 +51,6 @@ public class DockerClientFactory {
 
     private final DockerClientRuntimeConfig config;
 
-    /**
-     * Creates a new DockerClientFactory with the specified configuration.
-     *
-     * @param config The Docker client runtime configuration
-     * @throws IllegalArgumentException if config is null
-     */
     public DockerClientFactory(DockerClientRuntimeConfig config) {
         if (config == null) {
             throw new IllegalArgumentException("DockerClientRuntimeConfig cannot be null");
@@ -159,7 +153,7 @@ public class DockerClientFactory {
      * @return Configured DockerHttpClient instance
      */
     private DockerHttpClient buildDockerHttpClient(DockerClientConfig dockerConfig) {
-        return new ZerodepDockerHttpClient.Builder()
+        return new ApacheDockerHttpClient.Builder()
                 .dockerHost(dockerConfig.getDockerHost())
                 .sslConfig(dockerConfig.getSSLConfig())
                 .connectionTimeout(config.connectTimeout())

@@ -50,20 +50,9 @@ import io.quarkus.runtime.annotations.Recorder;
 @Recorder
 public class DockerClientRecorder {
 
+    private static final Map<String, DockerClient> clients = Collections.synchronizedMap(new HashMap<>());
     private final DockerRuntimeConfig config;
 
-    /**
-     * Thread-safe cache of Docker client instances.
-     * Keys are client names, values are the corresponding Docker client instances.
-     */
-    private static final Map<String, DockerClient> clients = Collections.synchronizedMap(new HashMap<>());
-
-    /**
-     * Creates a new DockerClientRecorder instance.
-     *
-     * @param config The Docker runtime configuration
-     * @throws IllegalArgumentException if config is null
-     */
     public DockerClientRecorder(DockerRuntimeConfig config) {
         this.config = config;
     }
