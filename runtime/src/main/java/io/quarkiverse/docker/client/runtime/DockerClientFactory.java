@@ -39,7 +39,6 @@ import io.quarkiverse.docker.client.runtime.config.DockerClientRuntimeConfig;
  *
  * @see DockerClientRuntimeConfig
  * @see DockerClient
- * @since 1.0
  */
 public class DockerClientFactory {
 

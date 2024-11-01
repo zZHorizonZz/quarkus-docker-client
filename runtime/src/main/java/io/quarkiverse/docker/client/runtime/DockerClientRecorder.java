@@ -44,8 +44,6 @@ import io.quarkus.runtime.annotations.Recorder;
  * @see DockerClient
  * @see DockerClientFactory
  * @see DockerRuntimeConfig
- *
- * @since 1.0
  */
 @Recorder
 public class DockerClientRecorder {

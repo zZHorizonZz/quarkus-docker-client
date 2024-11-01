@@ -50,7 +50,6 @@ import jakarta.inject.Qualifier;
  *
  * @see io.quarkiverse.docker.client.runtime.config.DockerClientRuntimeConfig
  * @see io.quarkiverse.docker.client.runtime.config.DockerRuntimeConfig
- * @since 1.0
  */
 @Qualifier
 @Documented
