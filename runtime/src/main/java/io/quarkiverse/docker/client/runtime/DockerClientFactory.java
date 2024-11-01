@@ -11,7 +11,7 @@ import com.github.dockerjava.core.DockerClientImpl;
 import com.github.dockerjava.transport.DockerHttpClient;
 
 import io.quarkiverse.docker.client.runtime.config.DockerClientRuntimeConfig;
-import io.quarkiverse.docker.client.runtime.http.QuarkusDockerHttpClient;
+import io.quarkiverse.docker.client.runtime.http.VertxDockerHttpClient;
 import io.vertx.core.Vertx;
 
 /**
@@ -172,6 +172,6 @@ public class DockerClientFactory {
                 .readTimeout(Duration.ofMillis(config.readTimeout().toMillis()))
                 .build();
 
-        return new QuarkusDockerHttpClient(quarkusConfig, vertx);
+        return new VertxDockerHttpClient(vertx, quarkusConfig);
     }
 }
