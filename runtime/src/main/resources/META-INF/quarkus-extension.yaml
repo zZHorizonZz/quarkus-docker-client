@@ -10,7 +10,7 @@ metadata:
   categories:
     - "cloud"
     - "containerization"
-  status: "stable"
+  status: "preview"
 # guide: "https://quarkiverse.github.io/quarkiverse-docs/quarkus-docker-client/"
   config:
     - "quarkus.docker."
