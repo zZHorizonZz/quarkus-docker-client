@@ -7,12 +7,13 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import jakarta.enterprise.util.AnnotationLiteral;
 import jakarta.inject.Qualifier;
 
 /**
- * Qualifier annotation used to identify and inject named Docker clients.
- * This annotation allows the application to work with multiple Docker client instances,
- * each configured differently and identified by a unique name.
+ * Qualifier annotation used to identify and inject named Docker clients. This annotation allows the application to work with
+ * multiple Docker client instances, each configured
+ * differently and identified by a unique name.
  *
  * <p>
  * Usage examples:
@@ -49,7 +50,6 @@ import jakarta.inject.Qualifier;
  *
  * @see io.quarkiverse.docker.client.runtime.config.DockerClientRuntimeConfig
  * @see io.quarkiverse.docker.client.runtime.config.DockerRuntimeConfig
- *
  * @since 1.0
  */
 @Qualifier
@@ -62,17 +62,37 @@ public @interface NamedDockerClient {
      * The name of the Docker client configuration to use.
      *
      * <p>
-     * This name corresponds to the configuration prefix in application.properties.
-     * For example, a value of "production" would use configuration properties
-     * prefixed with "quarkus.docker.production".
+     * This name corresponds to the configuration prefix in application.properties. For example, a value of "production" would
+     * use configuration properties prefixed with
+     * "quarkus.docker.production".
      * </p>
      *
      * <p>
-     * An empty string value (the default) refers to the default Docker client
-     * configuration using the "quarkus.docker" prefix.
+     * An empty string value (the default) refers to the default Docker client configuration using the "quarkus.docker" prefix.
      * </p>
      *
      * @return The name of the Docker client configuration to use
      */
     String value() default "";
+
+    /**
+     * An {@link AnnotationLiteral} to enable programmatic use of the {@link NamedDockerClient} qualifier.
+     */
+    class Literal extends AnnotationLiteral<NamedDockerClient> implements NamedDockerClient {
+
+        public static Literal of(String value) {
+            return new Literal(value);
+        }
+
+        private final String value;
+
+        public Literal(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String value() {
+            return value;
+        }
+    }
 }

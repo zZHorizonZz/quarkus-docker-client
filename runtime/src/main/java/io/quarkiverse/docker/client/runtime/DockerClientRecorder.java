@@ -89,8 +89,7 @@ public class DockerClientRecorder {
 
         // Only initialize if enabled
         if (clientConfig.enabled()) {
-            clients.computeIfAbsent(name,
-                    k -> createDockerClient(clientConfig));
+            clients.computeIfAbsent(name, k -> createDockerClient(clientConfig));
         }
     }
 
@@ -151,8 +150,7 @@ public class DockerClientRecorder {
         return () -> {
             DockerClient client = clients.get(clientName);
             if (client == null) {
-                throw new IllegalStateException(
-                        String.format("Docker client '%s' not initialized", clientName));
+                throw new IllegalStateException(String.format("Docker client '%s' not initialized", clientName));
             }
             return client;
         };

@@ -61,15 +61,6 @@ public class DockerClientFactory {
     /**
      * Creates and configures a new Docker client instance.
      *
-     * <p>
-     * The client is configured using the following priority:
-     * </p>
-     * <ol>
-     * <li>Explicitly configured values from DockerClientRuntimeConfig</li>
-     * <li>Platform-specific defaults</li>
-     * <li>System environment variables</li>
-     * </ol>
-     *
      * @return A configured Docker client instance
      * @throws IllegalStateException if the operating system is not supported or if required configuration is missing
      */
