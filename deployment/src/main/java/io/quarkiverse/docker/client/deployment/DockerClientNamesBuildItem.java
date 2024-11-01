@@ -6,13 +6,14 @@ import io.quarkiverse.docker.client.runtime.NamedDockerClient;
 import io.quarkus.builder.item.SimpleBuildItem;
 
 /**
- * A build item that holds the names of all Docker clients configured in the application. This includes both explicitly named clients through {@link NamedDockerClient} annotation
+ * A build item that holds the names of all Docker clients configured in the application. This includes both explicitly named
+ * clients through {@link NamedDockerClient} annotation
  * and the default client.
  */
 public final class DockerClientNamesBuildItem extends SimpleBuildItem {
 
     private final Set<String> dockerClientNames;
-    
+
     public DockerClientNamesBuildItem(Set<String> dockerClientNames) {
         if (dockerClientNames == null) {
             throw new NullPointerException("dockerClientNames cannot be null");

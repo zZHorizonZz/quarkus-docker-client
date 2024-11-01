@@ -63,7 +63,7 @@ public class DockerClientHealthCheck implements HealthCheck {
 
     private final Map<String, DockerClient> clients = new HashMap<>();
     private final DockerRuntimeConfig config;
-    
+
     public DockerClientHealthCheck(DockerRuntimeConfig config) {
         if (config == null) {
             throw new IllegalArgumentException("DockerRuntimeConfig cannot be null");
